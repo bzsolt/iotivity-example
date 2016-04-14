@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="2.4" package="org.example.iotivityexample" version="1.0.0">
-	<profile name="mobile" />
-	<ui-application appid="org.example.iotivityexample" exec="iotivityexample" type="capp" multiple="false" taskmanage="true" nodisplay="false" launch_mode="single">
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3.1" package="org.example.iotivityexample" version="1.0.0">
+	<profile name="wearable" />
+	<ui-application appid="org.example.iotivityexample" exec="iotivityexample" type="capp" multiple="false" taskmanage="true" nodisplay="false">
 		<icon>iotivityexample.png</icon>
 		<label>iotivityexample</label>
 	</ui-application>
