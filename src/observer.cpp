@@ -20,6 +20,7 @@
 //
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #include <cstdio>
+#include <iostream>
 
 #include "config.h"
 #include "observer.h"
