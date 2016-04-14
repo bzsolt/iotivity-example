@@ -41,6 +41,8 @@ tmp/480x854/openlayers-gmaps.png: docs/openlayers-gmaps.png
 
 distclean: clean
 	rm -f *.wgt
+	rm -rf Debug Release
+	rm -rf .package-stamp .settings .sign
 
 clean:
 	rm -f *~
