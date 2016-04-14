@@ -1,4 +1,7 @@
-Debug
-Release
+*~
+*.tmp
+/Debug
+/Release
 crash-info
-/res
+/tmp
+/SA_Report
