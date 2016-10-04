@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.4" package="org.example.iotivityexample" version="1.0.0">
+    <author email="rzr@gna.org" href="https://wiki.tizen.org/wiki/User:Pcoval">Philippe Coval</author>
+    <description>Minimal IoTivity client</description>
+    <profile name="mobile"/>
+    <ui-application appid="org.example.iotivityexample" exec="iotivityexample" launch_mode="single" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>IoTivity example</label>
+        <icon>iotivityexample.png</icon>
+    </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+    </privileges>
+    <feature name="http://tizen.org/feature/screen.size.all">true</feature>
+</manifest>
