@@ -30,16 +30,35 @@ std::string Common::m_endpoint = "/switch";
 std::string Common::m_propname = "value";
 std::string Common::m_link(OC::LINK_INTERFACE);
 
+#if 1 // __TIZEN__
+#include <dlog.h>
+#else
+#define dlog_print(type,tag,message) printf(message)
+#endif
+
+
+void Common::log(char const * const message)
+{
+//	char const * const LOGTAG="LOG";
+//	dlog_print(DLOG_INFO, LOGTAG, message);
+    printlog(message);
+}
+
 
 Logger::Logger(const char * message)
 {
     mMessage = message;
     std::cerr<<"log: { " << mMessage<<std::endl;
+    printlog("log: {");
+    printlog(mMessage);
+
 }
 
 Logger::~Logger()
 {
     std::cerr<<"log: } " << mMessage<<std::endl;
+    printlog(mMessage);
+    printlog("log: }");
 }
 
 // 	Common::log(__PRETTY_FUNCTION__);
