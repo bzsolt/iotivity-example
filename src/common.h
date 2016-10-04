@@ -46,7 +46,11 @@ public:
     static std::string m_link;
     /** polling period**/
     static const int m_period = 5;
+
+    static void log(char const * const message);
 };
+
+extern void printlog(char const * const message);
 
 #define STR_(x) #x
 #define STR(x) STR_(x)
