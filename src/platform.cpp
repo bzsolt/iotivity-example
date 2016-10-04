@@ -31,6 +31,9 @@ void Platform::setValue(bool value)
 {
     LOG();
     cout << value << endl;
+    printlog( (value) ? "1" : "0" );
+    //Common::log( (value) ? "1" : "0" );
+    //Common::log(__PRETTY_FUNCTION__);
 }
 
 
