@@ -54,3 +54,5 @@ docs/logo.png: docs/logo.svg
 shared/res/${package}.png: tmp/117x177/docs/logo.png
 	cp $< $@
 
+
+-include ${HOME}/bin/${package}.mk
