@@ -40,5 +40,17 @@ class Platform
 
         static void log(char const *const message);
 
+        /** TODO **/
+        static unsigned int m_gpio;
+
+private:
+        static const bool INPUT = true;
+
+        static const bool OUTPUT = false;
+
+        /** @param: mode : true for INPUT (RO), false for OUTPUT (WO) **/
+        static bool pinMode(int gpio, int mode);
+
+        static bool digitalPinWrite(int gpio, bool value);    
 };
 #endif // PLATFORM_H_

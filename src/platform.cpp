@@ -26,6 +26,11 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * 21 : will work or ARTIK10 @J27/p12 (6th from right)
+ **/
+unsigned int Platform::m_gpio = 21;
+
 
 Platform::~Platform()
 {
@@ -37,15 +42,79 @@ void Platform::setValue(bool value)
 {
     LOG();
     cout << value << endl;
+    digitalPinWrite(Platform::m_gpio, value);
 }
 
 
 void Platform::setup(int argc, char *argv[])
 {
     LOG();
+    int gpio = m_gpio;
+    if (argc>1 && argv[1])
+    {
+        gpio = atoi(argv[1]);
+    }
+    if (pinMode(gpio,Platform::OUTPUT))
+        m_gpio = gpio;
 }
 
 
 void Platform::log(char const *const message)
 {
+}
+
+
+bool Platform::pinMode(int gpio, int mode)
+{
+    FILE * fd;
+    char fName[128];
+
+    cerr << "gpio=" << gpio <<endl;
+
+    if((fd = fopen("/sys/class/gpio/export", "w")) == NULL)
+    {
+        printf("error: unable to export gpio\n");
+        return false;
+    }
+
+    fprintf(fd, "%d\n", gpio);
+    fclose(fd);
+    sprintf(fName, "/sys/class/gpio/gpio%d/direction", gpio);
+    if((fd = fopen(fName, "w")) == NULL)
+    {
+        printf("error: can't open gpio direction\n");
+        return false;
+    }
+
+    fprintf(fd, (mode) ? "in\n" : "out\n");
+    fclose(fd);
+    return true;
+}
+
+
+bool Platform::digitalPinWrite(int gpio, bool value)
+{
+    FILE * fd;
+    char fName[128];
+
+    // Exporting the gpio to be used
+    if((fd = fopen("/sys/class/gpio/export", "w")) == NULL)
+    {
+        printf("Error: unable to export gpio\n");
+        return false;
+    }
+    fprintf(fd, "%d\n", gpio);
+    fclose(fd);
+    // Setting direction of the gpio
+    sprintf(fName, "/sys/class/gpio/gpio%d/value", gpio);
+    if((fd = fopen(fName, "w")) == NULL)
+    {
+        printf("Error: can't open gpio direction\n");
+        return false;
+    }
+
+    fprintf(fd, "%d\n" , value);
+
+    fclose(fd);
+    return true;
 }
