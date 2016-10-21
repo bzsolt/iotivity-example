@@ -23,7 +23,7 @@
 
 default: all
 
-package?=iotivity-example
+package?=iotivity-example-gpio
 name?=${package}
 config_pkgconfig?=0
 export config_pkgconfig
