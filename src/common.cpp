@@ -22,12 +22,12 @@
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 #include "common.h"
-#include <iotivity/resource/OCApi.h>
+#include <OCApi.h>
 #include "platform.h"
 
 std::string Common::m_interface = OC_RSRVD_INTERFACE_DEFAULT; //"oic.if.baseline"
-std::string Common::m_type = "oic.r.switch.binary";
-std::string Common::m_endpoint = "/BinarySwitchResURI";
+std::string Common::m_type = "oic.r.text.scroller";
+std::string Common::m_endpoint = "/TextScrollerResURI";
 std::string Common::m_propname = "value";
 
 int Common::m_logLevel = 0;

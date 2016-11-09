@@ -27,23 +27,20 @@
 #include <memory>
 #include <iostream>
 
-#include <iotivity/resource/OCApi.h>
-#include <iotivity/resource/OCPlatform.h>
-#include <iotivity/resource/OCResource.h>
+#include <OCApi.h>
+#include <OCPlatform.h>
+#include <OCResource.h>
 
 
 class Resource
 {
         std::shared_ptr<OC::OCResource> m_OCResource;
         OC::OCRepresentation m_Representation;
-        OC::GetCallback m_GETCallback;
         OC::PostCallback m_POSTCallback;
-        void onGet(const OC::HeaderOptions &, const OC::OCRepresentation &, int);
         void onPost(const OC::HeaderOptions &, const OC::OCRepresentation &, int);
     public:
-        void get();
-        void post(bool);
-        Resource(std::shared_ptr<OC::OCResource> resource);
+        void post(std::string&);
+        Resource(std::shared_ptr<OC::OCResource>);
         virtual ~Resource();
 };
 
@@ -63,8 +60,7 @@ class IoTClient
         std::shared_ptr<Resource> getResource();
         void start();
         void print(std::shared_ptr<OC::OCResource> resource);
-        bool toggle();
-        bool setValue(bool value);
+        bool setValue(std::string& value);
         static IoTClient *getInstance();
     private:
         IoTClient();

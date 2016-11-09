@@ -35,8 +35,6 @@ Resource::Resource(shared_ptr<OCResource> resource)
 {
     LOG();
     m_OCResource = resource;
-    m_GETCallback = bind(&Resource::onGet, this,
-                         placeholders::_1, placeholders::_2, placeholders::_3);
 
     m_POSTCallback = bind(&Resource::onPost, this,
                           placeholders::_1, placeholders::_2, placeholders::_3);
@@ -44,24 +42,6 @@ Resource::Resource(shared_ptr<OCResource> resource)
 
 Resource::~Resource()
 {
-}
-
-
-void Resource::onGet(const HeaderOptions &headerOptions,
-                     const OCRepresentation &representation, int eCode)
-{
-    LOG();
-    if (eCode < OC_STACK_INVALID_URI)
-    {
-        bool value;
-        representation.getValue(Common::m_propname, value);
-        cout << value << endl;
-    }
-    else
-    {
-        cerr << "errror:: in GET response:" << eCode << endl;
-    }
-    IoTClient::menu();
 }
 
 void Resource::onPost(const HeaderOptions &headerOptions,
@@ -81,15 +61,7 @@ void Resource::onPost(const HeaderOptions &headerOptions,
     IoTClient::menu();
 }
 
-
-void Resource::get()
-{
-    LOG();
-    QueryParamsMap params;
-    m_OCResource->get(params, m_GETCallback);
-}
-
-void Resource::post(bool value)
+void Resource::post(std::string& value)
 {
     LOG();
     QueryParamsMap params;
@@ -156,7 +128,6 @@ shared_ptr<Resource> IoTClient::getResource()
     return m_Resource;
 }
 
-
 void IoTClient::onFind(shared_ptr<OCResource> resource)
 {
     LOG();
@@ -172,15 +143,8 @@ void IoTClient::onFind(shared_ptr<OCResource> resource)
                 cerr << "resourceUri=" << resourceUri << endl;
                 m_Resource = make_shared<Resource>(resource);
 
-                if (true)   // multi client need observe (for flip/flop)
-                {
-                    QueryParamsMap test;
-                    resource->observe(OC::ObserveType::Observe, test, &IoTClient::onObserve);
-                }
-                else     // simple client can only use get once
-                {
-                    m_Resource->get();
-                }
+                QueryParamsMap test;
+                resource->observe(OC::ObserveType::Observe, test, &IoTClient::onObserve);
                 menu();
             }
 
@@ -255,35 +219,14 @@ void IoTClient::onObserve(const HeaderOptions headerOptions, const OCRepresentat
 void IoTClient::menu()
 {
     cerr << endl << "menu: "
-         << "  0) Set value off"
-         << "  1) Set value on"
-         << "  2) Toggle value"
+         << "  0) Set value: hello "
+         << "  1) Set value: world"
          << "  9) Quit"
          << "  *) Display this menu"
          << endl;
 }
 
-
-bool IoTClient::toggle()
-{
-    Common::log(__PRETTY_FUNCTION__);
-
-    bool value = m_value;
-    if (m_Resource)
-    {
-        m_Resource->post(!value);
-    }
-    else
-    {
-        cerr << "log: resource not yet discovered" << endl;
-        Common::log("log: resource not yet discovered");
-    }
-
-    return value;
-}
-
-
-bool IoTClient::setValue(bool value)
+bool IoTClient::setValue(std::string& value)
 {
     Common::log(__PRETTY_FUNCTION__);
 
@@ -319,15 +262,16 @@ int IoTClient::main(int argc, char *argv[])
         cin >> choice;
         switch (choice)
         {
-            case 0:
-                IoTClient::getInstance()->setValue(false);
+            case 0: {
+                std::string text("Hello");
+                IoTClient::getInstance()->setValue(text);
                 break;
-            case 1:
-                IoTClient::getInstance()->setValue(true);
+            }
+            case 1: {
+                std::string text("World");
+                IoTClient::getInstance()->setValue(text);
                 break;
-            case 2:
-                IoTClient::getInstance()->toggle();
-                break;
+            }
             case 9:
                 return 0;
             default:
